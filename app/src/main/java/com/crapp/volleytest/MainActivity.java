@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("name", "prateek1");
         params.put("email","prateek1@gmail.com");
 
@@ -45,7 +45,8 @@ public class MainActivity extends Activity {
         CustomRequest jsonObjectRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                receivedJSON.setText(jsonObject.toString());
+                String text = jsonObject.toString();
+                receivedJSON.setText(text);
                 progressDialog.hide();
             }
         }, new Response.ErrorListener() {
