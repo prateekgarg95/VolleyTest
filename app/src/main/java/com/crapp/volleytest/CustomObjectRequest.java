@@ -14,20 +14,20 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 
-public class CustomRequest extends Request<JSONObject>{
+public class CustomObjectRequest extends Request<JSONObject>{
 
     private Listener<JSONObject> listener;
     private Map<String, String> params;
 
-    public CustomRequest(String url, Map<String, String> params,
-                         Listener<JSONObject> reponseListener, ErrorListener errorListener) {
+    public CustomObjectRequest(String url, Map<String, String> params,
+                               Listener<JSONObject> reponseListener, ErrorListener errorListener) {
         super(Method.GET, url, errorListener);
         this.listener = reponseListener;
         this.params = params;
     }
 
-    public CustomRequest(int method, String url, Map<String, String> params,
-                         Listener<JSONObject> reponseListener, ErrorListener errorListener) {
+    public CustomObjectRequest(int method, String url, Map<String, String> params,
+                               Listener<JSONObject> reponseListener, ErrorListener errorListener) {
         super(method, url, errorListener);
         this.listener = reponseListener;
         this.params = params;
@@ -36,7 +36,7 @@ public class CustomRequest extends Request<JSONObject>{
     @Override
     protected Map<String, String> getParams() throws com.android.volley.AuthFailureError {
         return params;
-    };
+    }
 
     @Override
     protected void deliverResponse(JSONObject response) {

@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,10 +40,10 @@ public class MainActivity extends Activity {
 
         Map<String, String> params = new HashMap<>();
         params.put("name", "prateek1");
-        params.put("email","prateek1@gmail.com");
+        params.put("email", "prateek1@gmail.com");
 
 
-        CustomRequest jsonObjectRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>(){
+        /*CustomObjectRequest jsonObjectRequest = new CustomObjectRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
@@ -62,7 +63,24 @@ public class MainActivity extends Activity {
                 progressDialog.hide();
             }
         });
-        AppController.getInstance().addToRequestQueue(jsonObjectRequest);
+        AppController.getInstance().addToRequestQueue(jsonObjectRequest);*/
+
+        CustomArrayRequest jsonArrayRequest = new CustomArrayRequest(Request.Method.POST, URL, params, new Response.Listener<JSONArray>(){
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                text = jsonArray.toString();
+                receivedJSON.setText(text);
+                progressDialog.hide();
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+                receivedJSON.setText("Error");
+                progressDialog.hide();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonArrayRequest);
     }
 
 }
