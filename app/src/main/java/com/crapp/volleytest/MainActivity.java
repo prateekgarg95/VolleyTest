@@ -5,12 +5,11 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -23,6 +22,7 @@ public class MainActivity extends Activity {
     String URL = "http://quesdesk.hostzi.com/create_user.php";
 
     TextView receivedJSON;
+    String text;
 
     ProgressDialog progressDialog;
 
@@ -42,14 +42,19 @@ public class MainActivity extends Activity {
         params.put("email","prateek1@gmail.com");
 
 
-        CustomRequest jsonObjectRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
+        CustomRequest jsonObjectRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject jsonObject) {
-                String text = jsonObject.toString();
-                receivedJSON.setText(text);
+                try{
+                    text = jsonObject.toString(2);
+                    receivedJSON.setText(text);
+                }catch (JSONException e){
+                    receivedJSON.setText("JSON Error");
+                }
+
                 progressDialog.hide();
             }
-        }, new Response.ErrorListener() {
+        }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
